@@ -7,15 +7,29 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <div id="lista-compras">
-        <h1>{{header}}</h1>
+        <!-- <h1>{{ header ?  header : 'Bienvenido' }}</h1> -->
+        <h1>{{ header.toLocaleUpperCase() }}</h1>
+        <div>
+            <input type="text" placeholder="Agregar nuevo" v-model="newutil" v-on:keyup.enter="utiles.push(newutil)">
+            <button class="btn btn-primary" v-on:click="utiles.push(newutil)">Agregar elemento</button>
+        </div>
+        <ul>
+            <li v-for="util in utiles">{{util}}</li>
+        </ul>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script>
         var app = new Vue({
             el: '#lista-compras',
             data: {
-                header: 'Lista de Comprasde Útiles'
+                header: 'Listado de útiles',
+                newutil: '',
+                utiles: [
+                    '10 cuadernos',
+                    '15 lápices',
+                    '5 cajas de colores'
+                ]
             }
         });
     </script>
