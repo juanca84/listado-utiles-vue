@@ -8,16 +8,23 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <div id="lista-compras">
-        <!-- <h1>{{ header ?  header : 'Bienvenido' }}</h1> -->
-        <h1>{{ header.toLocaleUpperCase() }}</h1>
-        <div>
-            <input type="text" placeholder="Agregar nuevo" v-model="newutil" v-on:keyup.enter="utiles.push(newutil)">
-            <button class="btn btn-primary" v-on:click="utiles.push(newutil)">Agregar elemento</button>
+    <div class="container">
+        <div id="lista-compras">
+            <!-- <h1>{{ header ?  header : 'Bienvenido' }}</h1> -->
+            <div class="header">
+                <h1>{{ header.toLocaleUpperCase() }}</h1>
+                <button v-if="estado === 'default'" @click="cambiarEstado('edit')" class="btn btn-primary">Agregar</button>
+                <button v-else class="btn btn-cancel" @click="cambiarEstado('default')">Cancelar</button>
+            </div>
+            <div v-if="estado === 'edit'">
+                <input type="text" placeholder="Agregar nuevo" v-model="newutil" @keyup.enter="guardarElemento">
+                <button class="btn btn-primary" v-on:click="guardarElemento">Guardar</button>
+            </div>
+            <ul>
+                <li v-for="util in utiles">{{util}}</li>
+            </ul>
+            <p v-if="utiles.length === 0">No existen elementos en la lista</p>
         </div>
-        <ul>
-            <li v-for="util in utiles">{{util}}</li>
-        </ul>
     </div>
     <script>
         var app = new Vue({
@@ -25,11 +32,22 @@
             data: {
                 header: 'Listado de útiles',
                 newutil: '',
+                estado: 'default',
                 utiles: [
-                    '10 cuadernos',
-                    '15 lápices',
-                    '5 cajas de colores'
+                    // '10 cuadernos',
+                    // '15 lápices',
+                    // '5 cajas de colores'
                 ]
+            },
+            methods: {
+                guardarElemento: function() {
+                    this.utiles.push(this.newutil);
+                    this.newutil = '';
+                },
+                cambiarEstado: function(newEstado) {
+                    this.estado = newEstado;
+                    this.newutil= '';
+                }
             }
         });
     </script>
