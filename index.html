@@ -19,6 +19,7 @@
             </div>
             <div v-if="estado === 'edit'">
                 <input type="text" placeholder="Agregar nuevo" v-model="newutil" @keyup.enter="guardarElemento">
+                <p>{{ cantidadCaracteres }}/200</p>
                 <button class="btn btn-primary" :disabled="newutil.length === 0" v-on:click="guardarElemento">Guardar</button>
             </div>
             <ul>
@@ -68,6 +69,11 @@
                 },
                 cambiarEstadoCompra(util) {
                     util.comprado = !util.comprado;
+                }
+            },
+            computed: {
+                cantidadCaracteres: function() {
+                    return this.newutil.length;
                 }
             }
         });
