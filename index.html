@@ -19,11 +19,10 @@
             </div>
             <div v-if="estado === 'edit'">
                 <input type="text" placeholder="Agregar nuevo" v-model="newutil" @keyup.enter="guardarElemento">
-                <p>{{ cantidadCaracteres }}/200</p>
                 <button class="btn btn-primary" :disabled="newutil.length === 0" v-on:click="guardarElemento">Guardar</button>
             </div>
             <ul>
-                <li v-for="ele in utiles" :class="{ tachado : ele.comprado }" @click="cambiarEstadoCompra(ele)">{{ele.util}}</li>
+                <li v-for="ele in listarReversa" :class="{ tachado : ele.comprado }" @click="cambiarEstadoCompra(ele)">{{ele.util}}</li>
             </ul>
             <p v-if="utiles.length === 0">No existen elementos en la lista</p>
         </div>
@@ -72,8 +71,8 @@
                 }
             },
             computed: {
-                cantidadCaracteres: function() {
-                    return this.newutil.length;
+                listarReversa: function() {
+                    return this.utiles.slice(0).reverse();
                 }
             }
         });
